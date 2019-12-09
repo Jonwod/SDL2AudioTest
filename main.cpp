@@ -5,9 +5,7 @@
 #include <limits>
 
 /*
- This program should be playing a sine wave at 440hz
- For some reason, on this machine at least, what it is playing
- is neither a sine-wave nor at 440hz
+ This program is intended as a template for basic sound synthesis with SDL2
 */
 
 
@@ -95,9 +93,10 @@ typedef int16_t SampleType;
 // you should only copy as much as the requested length (len)
 void my_audio_callback(void *userdata, Uint8 *stream, int len) {
     auto * sample_counter = reinterpret_cast<unsigned int*>(userdata);
+    std::cout<<"Sample counter: "<<*sample_counter<<std::endl;
     auto bufferLen = len / sizeof(SampleType);
 
     writeSine<SampleType>(stream, len, 44100, 440, *sample_counter);
 
-	sample_counter += bufferLen;
+	*sample_counter += bufferLen;
 }
